@@ -22,11 +22,28 @@ export async function myController() {
     parentEl.insertAdjacentHTML("afterbegin", markup);
   }
 
+  function renderError(parentEl: HTMLElement, message: string) {
+    const markup = `
+        <div class="error">
+            <div>
+              <svg>
+                <use href="src/img/icons.svg#icon-alert-triangle"></use>
+              </svg>
+            </div>
+            <p>${message}</p>
+          </div>
+    `;
+    parentEl.innerHTML = "";
+    parentEl.insertAdjacentHTML("afterbegin", markup);
+  }
+
   async function showRecipe() {
+    const recipe_id = window.location.hash.slice(1);
     renderSpinner(recipe_container);
     try {
+      if (!recipe_id) throw new Error("No recipe id found in URL");
       // const url = `${API_URL}/v2/recipes/5ed6604591c37cdc054bc886?key=${MY_KEY}`;
-      const url = `${API_URL}/recipes/5ed6604591c37cdc054bc886`;
+      const url = `${API_URL}/recipes/${recipe_id}`;
       // Параллельно: запрос и минимальный показ спиннера
       const [res] = await Promise.all([
         fetch(url),
@@ -134,7 +151,8 @@ export async function myController() {
       recipe_container.insertAdjacentHTML("afterbegin", markup);
     } catch (err) {
       console.error(err);
+      renderError(recipe_container, (err as Error).message);
     }
   }
-  showRecipe();
+  ["load", "hashchange"].forEach((ev) => window.addEventListener(ev, showRecipe));
 }
