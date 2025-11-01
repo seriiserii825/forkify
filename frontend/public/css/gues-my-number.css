@@ -1,0 +1,138 @@
+/* Base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html {
+  font-size: 62.5%;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Press Start 2P', sans-serif;
+  color: #eee;
+  background-color: #222;
+  /* background-color: #60b347; */
+}
+
+/* ===== Block: game ===== */
+.game {
+  opacity: 1;
+}
+
+/* Header */
+.game__header {
+  position: relative;
+  height: 35vh;
+  border-bottom: 7px solid #eee;
+}
+
+/* Main area */
+.game__main {
+  height: 65vh;
+  color: #eee;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+/* Panels */
+.game__panel {
+  width: 52rem;
+}
+
+.game__panel--left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.game__panel--right {
+  font-size: 2rem;
+}
+
+/* Title and number */
+.game__title {
+  font-size: 4rem;
+  text-align: center;
+  position: absolute;
+  width: 100%;
+  top: 52%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.game__number {
+  background: #eee;
+  color: #333;
+  font-size: 6rem;
+  width: 15rem;
+  padding: 3rem 0rem;
+  text-align: center;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%, 50%);
+}
+
+/* Header helper text & again button */
+.game__between {
+  font-size: 1.4rem;
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+}
+
+.game__btn--again {
+  position: absolute;
+  top: 2rem;
+  left: 2rem;
+}
+
+/* Input & buttons */
+.game__input {
+  background: none;
+  border: 4px solid #eee;
+  font-family: inherit;
+  color: inherit;
+  font-size: 5rem;
+  padding: 2.5rem;
+  width: 25rem;
+  text-align: center;
+  display: block;
+  margin-bottom: 3rem;
+}
+
+.game__btn {
+  border: none;
+  background-color: #eee;
+  color: #222;
+  font-size: 2rem;
+  font-family: inherit;
+  padding: 2rem 3rem;
+  cursor: pointer;
+}
+
+.game__btn:hover {
+  background-color: #ccc;
+}
+
+/* Messages & labels */
+.game__message {
+  margin-bottom: 8rem;
+  height: 3rem;
+}
+
+.game__label {
+  /* базовый стиль для подписей */
+}
+
+.game__label--score {
+  margin-bottom: 2rem;
+}
+
+/* Values */
+.game__score {}
+.game__highscore {}

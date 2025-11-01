@@ -1,0 +1,66 @@
+{
+  "recipes": [
+    {
+      "id": "5ed6604591c37cdc054bc886",
+      "title": "Best Pizza Dough Ever",
+      "publisher": "101 Cookbooks",
+      "source_url": "http://www.101cookbooks.com/archives/001199.html",
+      "image_url": "http://forkify-api.herokuapp.com/images/best_pizza_dough_recipe1b20.jpg",
+      "servings": 4,
+      "cooking_time": 45,
+      "ingredients": [
+        {
+          "quantity": 4.5,
+          "unit": "cup",
+          "description": "All-purpose flour"
+        },
+        {
+          "quantity": 1.5,
+          "unit": "tsp",
+          "description": "Active dry yeast"
+        },
+        {
+          "quantity": 1,
+          "unit": "tsp",
+          "description": "Salt"
+        },
+        {
+          "quantity": 1.25,
+          "unit": "cup",
+          "description": "Water (lukewarm)"
+        }
+      ]
+    },
+    {
+      "id": "5ed6604591c37cdc054bc8aa1",
+      "title": "Classic Pancakes",
+      "publisher": "Home Chef",
+      "source_url": "https://example.com/pancakes",
+      "image_url": "https://picsum.photos/seed/pancake/600/400",
+      "servings": 2,
+      "cooking_time": 15,
+      "ingredients": [
+        {
+          "quantity": 1,
+          "unit": "cup",
+          "description": "Flour"
+        },
+        {
+          "quantity": 1,
+          "unit": "tbsp",
+          "description": "Sugar"
+        },
+        {
+          "quantity": 1,
+          "unit": "tsp",
+          "description": "Baking powder"
+        },
+        {
+          "quantity": 1,
+          "unit": "",
+          "description": "Egg"
+        }
+      ]
+    }
+  ]
+}
