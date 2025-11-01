@@ -2,20 +2,41 @@ import type { TSingleRecipeResponse } from "../types/SingleRecipe";
 
 export async function myController() {
   // https://forkify-api.jonas.io
+  function minDelay(ms: number) {
+    return new Promise((r) => setTimeout(r, ms));
+  }
 
   const API_URL = import.meta.env.VITE_API_URL;
 
   const recipe_container = document.querySelector(".recipe") as HTMLElement;
 
+  function renderSpinner(parentEl: HTMLElement) {
+    const markup = `
+      <div class="spinner">
+        <svg>
+          <use href="src/img/icons.svg#icon-loader"></use>
+        </svg>
+      </div>
+    `;
+    parentEl.innerHTML = "";
+    parentEl.insertAdjacentHTML("afterbegin", markup);
+  }
+
   async function showRecipe() {
+    renderSpinner(recipe_container);
     try {
       // const url = `${API_URL}/v2/recipes/5ed6604591c37cdc054bc886?key=${MY_KEY}`;
       const url = `${API_URL}/recipes/5ed6604591c37cdc054bc886`;
-      const res = await fetch(url);
+      // Параллельно: запрос и минимальный показ спиннера
+      const [res] = await Promise.all([
+        fetch(url),
+        minDelay(1200), // например, 800–1200 мс достаточно для UX
+      ]);
+      // const res = await fetch(url);
+      const data = await res.json();
       if (!res.ok) {
         throw new Error(`Recipe not found (${data.message}) (${res.status})`);
       }
-      const data = await res.json();
       let { recipe } = data.data as TSingleRecipeResponse["data"];
 
       const markup = `
@@ -70,9 +91,10 @@ export async function myController() {
         <div class="recipe__ingredients">
           <h2 class="heading--2">Recipe ingredients</h2>
           <ul class="recipe__ingredient-list">
-          ${recipe.ingredients.map(
-            (ingredient) =>
-              `
+          ${recipe.ingredients
+            .map(
+              (ingredient) =>
+                `
             <li class="recipe__ingredient">
               <svg class="recipe__icon">
                 <use href="src/img/icons.svg#icon-check"></use>
@@ -84,7 +106,8 @@ export async function myController() {
               </div>
             </li>
                                    `
-          ).join("")}
+            )
+            .join("")}
           </ul>
         </div>
 
