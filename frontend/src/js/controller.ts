@@ -1,8 +1,8 @@
 import type {TRecipe} from "../types/SingleRecipe";
 import { state, loadRecipe } from "./model";
-import {RecipeView} from "./views/recicpeView";
+import {RecipeView} from "./views/recipeView";
 
-export async function myController() {
+export async function recipesController() {
   const recipe_container = document.querySelector(".recipe") as HTMLElement;
 
   function renderSpinner(parentEl: HTMLElement) {

@@ -7,8 +7,12 @@ export class RecipeView {
 
   render() {
     const markup = this.generateMarkup();
-    this.parent_el.innerHTML = "";
+    this.clear();
     this.parent_el.insertAdjacentHTML("afterbegin", markup);
+  }
+
+  private clear () {
+    this.parent_el.innerHTML = "";
   }
 
   private generateMarkup() {
