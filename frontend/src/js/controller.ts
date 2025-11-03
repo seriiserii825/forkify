@@ -1,13 +1,7 @@
-import type { TSingleRecipeResponse } from "../types/SingleRecipe";
+import type {TRecipe} from "../types/SingleRecipe";
+import { state, loadRecipe } from "./model";
 
 export async function myController() {
-  // https://forkify-api.jonas.io
-  function minDelay(ms: number) {
-    return new Promise((r) => setTimeout(r, ms));
-  }
-
-  const API_URL = import.meta.env.VITE_API_URL;
-
   const recipe_container = document.querySelector(".recipe") as HTMLElement;
 
   function renderSpinner(parentEl: HTMLElement) {
@@ -41,21 +35,8 @@ export async function myController() {
     const recipe_id = window.location.hash.slice(1);
     renderSpinner(recipe_container);
     try {
-      if (!recipe_id) throw new Error("No recipe id found in URL");
-      // const url = `${API_URL}/v2/recipes/5ed6604591c37cdc054bc886?key=${MY_KEY}`;
-      const url = `${API_URL}/recipes/${recipe_id}`;
-      // Параллельно: запрос и минимальный показ спиннера
-      const [res] = await Promise.all([
-        fetch(url),
-        minDelay(1200), // например, 800–1200 мс достаточно для UX
-      ]);
-      // const res = await fetch(url);
-      const data = await res.json();
-      if (!res.ok) {
-        throw new Error(`Recipe not found (${data.message}) (${res.status})`);
-      }
-      let { recipe } = data.data as TSingleRecipeResponse["data"];
-
+      await loadRecipe(recipe_id);
+      const { recipe } = state as unknown as { recipe: TRecipe };
       const markup = `
         <figure class="recipe__fig">
           <img src="${recipe.image_url}" alt="${recipe.title}" class="recipe__img" />
@@ -149,9 +130,8 @@ export async function myController() {
       `;
       recipe_container.innerHTML = "";
       recipe_container.insertAdjacentHTML("afterbegin", markup);
-    } catch (err) {
-      console.error(err);
-      renderError(recipe_container, (err as Error).message);
+    } catch (error) {
+      renderError(recipe_container, (error as Error).message);
     }
   }
   ["load", "hashchange"].forEach((ev) => window.addEventListener(ev, showRecipe));
