@@ -1,17 +1,42 @@
 export class RecipeView {
   private parent_el = document.querySelector(".recipe") as HTMLElement;
+  private data: any;
 
-  constructor(private data: any) {
+  render(data: any) {
     this.data = data;
-  }
-
-  render() {
     const markup = this.generateMarkup();
     this.clear();
     this.parent_el.insertAdjacentHTML("afterbegin", markup);
   }
 
-  private clear () {
+  renderSpinner() {
+    const markup = `
+      <div class="spinner">
+        <svg>
+          <use href="src/img/icons.svg#icon-loader"></use>
+        </svg>
+      </div>
+    `;
+    this.parent_el.innerHTML = "";
+    this.parent_el.insertAdjacentHTML("afterbegin", markup);
+  }
+
+  renderError(message: string) {
+    const markup = `
+        <div class="error">
+            <div>
+              <svg>
+                <use href="src/img/icons.svg#icon-alert-triangle"></use>
+              </svg>
+            </div>
+            <p>${message}</p>
+          </div>
+    `;
+    this.parent_el.innerHTML = "";
+    this.parent_el.insertAdjacentHTML("afterbegin", markup);
+  }
+
+  private clear() {
     this.parent_el.innerHTML = "";
   }
 
@@ -71,21 +96,7 @@ export class RecipeView {
           <h2 class="heading--2">Recipe ingredients</h2>
           <ul class="recipe__ingredient-list">
           ${this.data.ingredients
-            .map(
-              (ingredient) =>
-                `
-            <li class="recipe__ingredient">
-              <svg class="recipe__icon">
-                <use href="src/img/icons.svg#icon-check"></use>
-              </svg>
-              <div class="recipe__quantity">${ingredient.quantity}</div>
-              <div class="recipe__description">
-                <span class="recipe__unit">${ingredient.unit}</span>
-                ${ingredient.description}
-              </div>
-            </li>
-                                   `
-            )
+            .map((ingredient: any) => this.generateIngredientMarkup(ingredient))
             .join("")}
           </ul>
         </div>
@@ -109,5 +120,19 @@ export class RecipeView {
           </a>
         </div>
       `;
+  }
+  private generateIngredientMarkup(ingredient: any) {
+    return `
+            <li class="recipe__ingredient">
+              <svg class="recipe__icon">
+                <use href="src/img/icons.svg#icon-check"></use>
+              </svg>
+              <div class="recipe__quantity">${ingredient.quantity}</div>
+              <div class="recipe__description">
+                <span class="recipe__unit">${ingredient.unit}</span>
+                ${ingredient.description}
+              </div>
+            </li>
+                                   `;
   }
 }
